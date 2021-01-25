@@ -1,0 +1,46 @@
+{% load static %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://kit.fontawesome.com/7ccb74e647.js" crossorigin="anonymous"></script>
+    <title>Flying Conditions</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  </head>
+  <body>
+    <div class="card-body text-center" style="width: 50%; margin-left: 25%; margin-top: 2%;">
+        {% if are_conditions_met == True %}
+          <p> <i class="far fa-check-circle fa-3x"></i></p>
+          <h3> You can fly! </h3>
+        {% endif %}
+
+        {% if are_conditions_met == False %}
+          <p><i class="fas fa-exclamation-triangle"></i></p>
+          <h3> You cannot fly </h3>
+        {% endif %}
+    </div>
+    <div class="card" style="width: 50%; margin-left: 25%; margin-top: 1%; ">
+      <div class="card-header">
+        Columbus Flight Weather Data
+      </div>
+      <div class="card-body">
+        <h5> Temp </h5>
+        <p> {{ temp }} Degrees Fahrenheit</p>
+
+        <h5> Windspeed </h5>
+        <p> {{ windspeed }} Knots</p>
+
+        <h5> Wind Direction </h5>
+        <p> {{ degree }} Degrees </p>
+
+        <h5> Visibility </h5>
+        <p> {{ visibility }} Statute Miles</p>
+
+        <h5> Cloud Cover </h5>
+        <p> {{ clouds }}%</p>
+
+        <h5> Rain Probability </h5>
+        <p> {{ rain_probability }}% </p>
+      </div>
+    </div>
+  </body>
+</html>
