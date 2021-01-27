@@ -14,9 +14,9 @@ def are_conditions_met(data):
         counter += 1
     if data["temp"] > 32.0 and data["temp"] < 90:
         counter += 1
-    if data['weather'].substring("snow") == -1  and data['weather'].substring('rain') == -1:
+    if data['weather'].find("snow") == -1  and data['weather'].find('rain') == -1:
         counter += 1
-    if data['description'].substring("snow") == -1 and data['description'].substring('rain') == -1 and data['description'].substring('ice') == -1:
+    if data['description'].find("snow") == -1 and data['description'].find('rain') == -1 and data['description'].find('ice') == -1:
         counter += 1
     return counter == 5
 
