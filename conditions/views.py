@@ -20,9 +20,19 @@ def are_conditions_met(data):
         counter += 1
     return counter == 5
 
-def view_conditions(request):
-    #requested_city = get_object_or_404(City, pk=city_pk)
-    requested_city = "Columbus"
+def home(request):
+    available_cities = City.objects.all()
+    is_safe_for_flying = {}
+    for city in City.objects.all():
+        is_safe_for_flying[city.get_fetchable_name] = are_conditions_met(convert_data(get_weather_data(city.get_fetchable_name())))
+
+    return render(request, 'home.html', {'available_cities': available_cities})
+
+
+
+def view_conditions(request, pk):
+    city_object = get_object_or_404(City, pk=pk)
+    requested_city = city_object.get_fetchable_name()
 
     weather_data = convert_data(get_weather_data(requested_city))
     weather_data['are_conditions_met'] = are_conditions_met(weather_data)

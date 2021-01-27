@@ -19,5 +19,6 @@ import conditions.views as condition_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', condition_views.view_conditions, name="view_conditions"),
+    path('conditions/<int:pk>', condition_views.view_conditions, name="view_conditions"),
+    path('', condition_views.home, name="home"),
 ]

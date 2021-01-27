@@ -10,7 +10,6 @@ def get_weather_data(city_name):
     x = response.json()
     list = x["list"]
     data = list[1]
-    print(data)
 
 
     response_data = {}
