@@ -9,7 +9,8 @@ def get_weather_data(city_name):
 
     x = response.json()
     list = x["list"]
-    data = list[0]
+    data = list[1]
+    print(data)
 
 
     response_data = {}
@@ -21,7 +22,8 @@ def get_weather_data(city_name):
 
         response_data['visibility'] = data["visibility"]
         response_data['clouds'] = data["clouds"]['all']
-        response_data['rain_probability'] = data["rain"]["3h"]
+        response_data['weather'] = data["weather"][0]["main"]
+        response_data['description'] = data['weather'][0]["description"]
     else:
         response_data["ERROR"] = "ERROR IN FETCH"
     return response_data
@@ -33,7 +35,8 @@ def convert_data(response):
     cleaned_response["degree"] = response.get("degree")
     cleaned_response["visibility"] = meters_to_statute_meters(response.get("visibility"))
     cleaned_response["clouds"] = response.get("clouds")
-    cleaned_response["rain_probability"] = response.get("rain_probability")
+    cleaned_response["weather"] = response.get("weather")
+    cleaned_response["description"] = response.get("description")
 
     return cleaned_response
 
