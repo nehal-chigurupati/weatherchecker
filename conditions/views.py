@@ -8,7 +8,7 @@ from .models import City
 
 def are_conditions_met(data):
     counter = 0
-    if data["visibility"] >= 10.0:
+    if data["visibility"] >= 6:
         counter += 1
     if data["windspeed"] < 30.0:
         counter += 1
@@ -16,8 +16,10 @@ def are_conditions_met(data):
         counter += 1
     if data['weather'].find("snow") == -1  and data['weather'].find('rain') == -1:
         counter += 1
-    if data['description'].find("snow") == -1 and data['description'].find('rain') == -1 and data['description'].find('ice') == -1:
+    if data['description'].find("snow") == -1 and data['description'].find('ice') == -1:
         counter += 1
+    else:
+        print("test 5 failed")
     return counter == 5
 
 def home(request):
