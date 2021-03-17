@@ -4,7 +4,9 @@ from django.http import Http404
 from django.db.models import Count
 
 from .fetch import get_weather_data, convert_data, kelvin_to_fahrenheit, meters_to_statute_meters
+from .fetch import getActiveFlightsToAirport, getActiveFlightsFromAirport
 from .models import City
+from .IATA_CODES import IATA_CODES
 
 def are_conditions_met(data):
     counter = 0
@@ -37,9 +39,13 @@ def view_conditions(request, pk):
     requested_city = city_object.get_fetchable_name()
 
     weather_data = convert_data(get_weather_data(requested_city))
+    flights_to_airport = getActiveFlightsToAirport(IATA_CODES[requested_city])
+    flights_from_airport = getActiveFlightsFromAirport(IATA_CODES[requested_city])
     weather_data['are_conditions_met'] = are_conditions_met(weather_data)
+    weather_data['city'] = requested_city
+    
 
-    return render(request, 'conditions.html', weather_data)
+    return render(request, 'conditions.html', {'weather': weather_data, 'flights_to_airport': flights_to_airport, 'flights_from_airport': flights_from_airport})
 
 def view_cities(request):
     return render(request, 'view_cities.html')

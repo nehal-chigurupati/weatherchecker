@@ -1,4 +1,5 @@
-{% load static %}<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -8,42 +9,120 @@
   </head>
   <body>
     <div class="card-body text-center" style="width: 50%; margin-left: 25%; margin-top: 1%;">
-        {% if are_conditions_met == True %}
+        {% if weather.are_conditions_met == True %}
           <p> <i class="far fa-check-circle fa-lg"></i></p>
           <h3> You can fly! </h3>
+          <p> James, the weather meets your training conditions! </p>
         {% endif %}
 
-        {% if are_conditions_met == False %}
+        {% if weather.are_conditions_met == False %}
           <p><i class="fas fa-exclamation-triangle"></i></p>
           <h3> You cannot fly </h3>
+          <p> James, the weather does not meet your training conditions :( </p>
         {% endif %}
     </div>
     <div class="card" style="width: 50%; margin-left: 25%; margin-top: 1%; margin-bottom: 3%;">
       <div class="card-header">
-        Columbus Flight Weather Data
+        {{ weather.city }} Flight Weather Data
       </div>
       <div class="card-body">
         <h5> Temp </h5>
-        <p> {{ temp }} Degrees Fahrenheit</p>
+        <p> {{ weather.temp }} Degrees Fahrenheit</p>
 
         <h5> Windspeed </h5>
-        <p> {{ windspeed }} Knots</p>
+        <p> {{ weather.windspeed }} Knots</p>
 
         <h5> Wind Direction </h5>
-        <p> {{ degree }} Degrees </p>
+        <p> {{ weather.degree }} Degrees </p>
 
         <h5> Visibility </h5>
-        <p> {{ visibility }} Statute Miles</p>
+        <p> {{ weather.visibility }} Statute Miles</p>
 
         <h5> Cloud Cover </h5>
-        <p> {{ clouds }}%</p>
+        <p> {{ weather.clouds }}%</p>
 
         <h5> Condition </h5>
-        <p> {{ weather }} </p>
+        <p> {{ weather.weather }} </p>
 
         <h5> Description </h5>
-        <p> {{ description }} </p>
+        <p> {{ weather.description }} </p>
       </div>
     </div>
+    <h5 style="margin-left: 45%;"> Flights to {{ weather.city}} </h5>
+
+    <table class="table table-sm table-condensed">
+      <thead>
+        <tr>
+          <th scope="col">Flight #</th>
+          <th scope="col">Registration</th>
+          <th scope="col">To</th>
+          <th scope="col">From</th>
+          <th scope="col">ETA</th>
+          <th scope="col">Lat.</th>
+          <th scope="col">Long.</th>
+          <th scope="col">Alt.</th>
+          <th scope="col">Dir.</th>
+          <th scope="col">Horiz. Speed</th>
+          <th scope="col">Vert. Speed</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for flight, data in flights_to_airport.items %}
+        <tr>
+          <td> {{ data.flightNumber }} </td>
+          <td> {{ data.flightRegistration }} </td>
+          <td> {{ data.flightDestination }} </td>
+          <td> {{ data.flightDeparture }} </td>
+          <td> {{ data.flightEstimatedArrival }} </td>
+          <td> {{ data.flightLatitude }} </td>
+          <td> {{ data.flightLongitude }} </td>
+          <td> {{ data.flightAltitude }} </td>
+          <td> {{ data.flightDirection }} </td>
+          <td> {{ data.flightSpeedHorizontal }} </td>
+          <td> {{ data.flightSpeedVertical }} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+      <h5 style="margin-left: 45%;"> Flights from {{ weather.city }} </h5>
+
+      <table class="table table-sm table-condensed">
+        <thead>
+          <tr>
+            <th scope="col">Flight #</th>
+            <th scope="col">Registration</th>
+            <th scope="col">To</th>
+            <th scope="col">From</th>
+            <th scope="col">ETA</th>
+            <th scope="col">Lat.</th>
+            <th scope="col">Long.</th>
+            <th scope="col">Alt.</th>
+            <th scope="col">Dir.</th>
+            <th scope="col">Horiz. Speed</th>
+            <th scope="col">Vert. Speed</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for flight, data in flights_to_airport.items %}
+          <tr>
+            <td> {{ data.flightNumber }} </td>
+            <td> {{ data.flightRegistration }} </td>
+            <td> {{ data.flightDestination }} </td>
+            <td> {{ data.flightDeparture }} </td>
+            <td> {{ data.flightEstimatedArrival }} </td>
+            <td> {{ data.flightLatitude }} </td>
+            <td> {{ data.flightLongitude }} </td>
+            <td> {{ data.flightAltitude }} </td>
+            <td> {{ data.flightDirection }} </td>
+            <td> {{ data.flightSpeedHorizontal }} </td>
+            <td> {{ data.flightSpeedVertical }} </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+
   </body>
+
 </html>

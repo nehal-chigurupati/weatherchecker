@@ -1,4 +1,137 @@
 import requests, json
+import time as time
+
+def getActiveFlightsToAirport(arriving_airport_iata):
+    params = {
+        'access_key': 'a1c8611fb0c9eead98c3792c15f2e1cc',
+        'arr_iata': arriving_airport_iata,
+        'flight_status': 'active'
+    }
+
+    api_result = requests.get('http://api.aviationstack.com/v1/flights', params)
+    timeOfFetch = time.time()
+
+    api_response = api_result.json()
+    data = api_response['data']
+    departing_dict = {}
+
+
+    for flight in data:
+        #flight Number
+        if flight['flight'] != None:
+            flightNumber = flight['flight']['iata']
+        else:
+            flightNumber = None
+
+        #flight aircraft
+        if flight['aircraft'] != None:
+            flightRegistration = flight['aircraft']['registration']
+        else:
+            flightRegistration = None
+
+        #flight departure
+        if flight['departure'] != None:
+            flightDeparture = flight['departure']['airport']
+        else:
+            flightDeparture = None
+
+        #estimated arrival
+        if flight['arrival'] != None:
+            flightEstimatedArrival = flight['arrival']['estimated']
+        else:
+            flightEstimatedArrival = None
+
+        #current latitude, longitude, horizontal, vertical speeds and altitude
+        if flight['live'] != None:
+            flightLatitude = flight['live']['latitude']
+            flightLongitude = flight['live']['longitude']
+            flightAltitude = flight['live']['altitude']
+            flightDirection = flight['live']['direction']
+            flightSpeedHorizontal = flight['live']['speed_horizontal']
+            flightSpeedVertical = flight['live']['speed_vertical']
+        else:
+            flightLatitude = None
+            flightLongitude = None
+            flightAltitude = None
+            flightDirection = None
+            flightSpeedHorizontal = None
+            flightSpeedVertical = None
+
+        departing_dict[flightNumber] = {'flightNumber': flightNumber, 'flightRegistration': flightRegistration, 'flightDeparture': flightDeparture, 'flightDestination': arriving_airport_iata,
+            'flightEstimatedArrival': flightEstimatedArrival, 'flightLatitude': flightLatitude, 'flightLongitude': flightLongitude,
+            'flightAltitude': flightAltitude, 'flightDirection': flightDirection, 'flightSpeedHorizontal': flightSpeedHorizontal,
+            'flightSpeedVertical': flightSpeedVertical}
+    processingTime = time.time() - timeOfFetch
+    departing_dict['processingTime'] = time.time()
+    departing_dict['timeOfFetch'] = timeOfFetch
+
+    return departing_dict
+
+def getActiveFlightsFromAirport(departing_airport_iata):
+    params = {
+        'access_key': 'a1c8611fb0c9eead98c3792c15f2e1cc',
+        'dep_iata': departing_airport_iata,
+        'flight_status': 'active'
+    }
+
+    api_result = requests.get('http://api.aviationstack.com/v1/flights', params)
+    timeOfFetch = time.time()
+
+    api_response = api_result.json()
+    data = api_response['data']
+    departing_dict = {}
+
+
+    for flight in data:
+        #flight Number
+        if flight['flight'] != None:
+            flightNumber = flight['flight']['iata']
+        else:
+            flightNumber = None
+
+        #flight aircraft
+        if flight['aircraft'] != None:
+            flightRegistration = flight['aircraft']['registration']
+        else:
+            flightRegistration = None
+
+        #flight destination
+        if flight['arrival'] != None:
+            flightDestination = flight['arrival']['airport']
+        else:
+            flightDestination = None
+
+        #estimated arrival
+        if flight['arrival'] != None:
+            flightEstimatedArrival = flight['arrival']['estimated']
+        else:
+            flightEstimatedArrival = None
+
+        #current latitude, longitude, horizontal, vertical speeds and altitude
+        if flight['live'] != None:
+            flightLatitude = flight['live']['latitude']
+            flightLongitude = flight['live']['longitude']
+            flightAltitude = flight['live']['altitude']
+            flightDirection = flight['live']['direction']
+            flightSpeedHorizontal = flight['live']['speed_horizontal']
+            flightSpeedVertical = flight['live']['speed_vertical']
+        else:
+            flightLatitude = None
+            flightLongitude = None
+            flightAltitude = None
+            flightDirection = None
+            flightSpeedHorizontal = None
+            flightSpeedVertical = None
+
+        departing_dict[flightNumber] = {'flightNumber': flightNumber, 'flightRegistration': flightRegistration, 'flightDestination': flightDestination, 'flightDeparture': departing_airport_iata,
+            'flightEstimatedArrival': flightEstimatedArrival, 'flightLatitude': flightLatitude, 'flightLongitude': flightLongitude,
+            'flightAltitude': flightAltitude, 'flightDirection': flightDirection, 'flightSpeedHorizontal': flightSpeedHorizontal,
+            'flightSpeedVertical': flightSpeedVertical}
+    processingTime = time.time() - timeOfFetch
+    departing_dict['processingTime'] = time.time()
+    departing_dict['timeOfFetch'] = timeOfFetch
+
+    return departing_dict
 
 def get_weather_data(city_name):
     api_key = "82f0629226863f638585e84561e00e1d"
