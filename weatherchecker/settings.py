@@ -29,7 +29,6 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-#DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 #os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
@@ -46,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'conditions',
+    'documentation',
 ]
 
 MIDDLEWARE = [
@@ -135,8 +135,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#STATICFILES_DIRS = [
-    #os.path.join(BASE_DIR, 'static'),
-#]
+"""
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+"""
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")

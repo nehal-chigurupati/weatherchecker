@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://kit.fontawesome.com/7ccb74e647.js" crossorigin="anonymous"></script>
+    <title> Projects </title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  </head>
+  <body>
+    <div class="card-header" style="margin-bottom: 3%;"> Nehal's Documentation - Projects</div>
+    <div class="card-columns">
+      {% for project in projects %}
+      <div class="card" style="margin-left: 3%; margin-right: 3%; margin-bottom: 3%">
+        <div class="card-header"> {{ project.name }} </div>
+        <div class="card-body">
+            <p> {{ project.description }} </p>
+            <p style="margin-top: 5%;"> Directory: {{ project.directory }} </p>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-primary" href="{% url 'view_project_interfaces' project.pk %}"> See Interfaces </a>
+        </div>
+      </div>
+      {% endfor %}
+    </body>
+  </html>

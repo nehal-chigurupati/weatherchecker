@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Doc </title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  </head>
+  <body>
+    <div class="card-header"> Nehal's Documentation - Interfaces for project {{ project.name }}</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Class</th>
+          <th scope="col">Directory</th>
+        </tr>
+      </thead>
+    </thead>
+    <tbody>
+    {% for interface in interfaces %}
+      <td> <a class="btn btn-primary" href="{% url 'view_interface' interface.pk %}">{{ interface.name }} </a> </td>
+      <td> {{ interface.implementing_class }} </td>
+      <td> {{ interface.directory }} </td>
+    {% endfor %}
+    </tbody>
+  </table>
+</body>

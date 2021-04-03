@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://kit.fontawesome.com/7ccb74e647.js" crossorigin="anonymous"></script>
+    <title> {{ interface.name }} </title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  </head>
+  <body>
+    <h1 style="text-align: center;"> <i class="fas fa-sitemap"></i> </h1>
+    <h1 style="text-align: center;"> {{ interface.name }}</h1>
+  </body>
+  <div class="card text-center" style="margin: auto; width: 70%; border: 3px osolid black; padding: 10px">
+    <div class="card-body">
+      <h6> Project: {{ interface.project }} </h6>
+      <h6> Implementing Class: {{ interface.implementing_class }} </h6>
+      <h6> Description: </h6>
+      <p> {{ interface.description }} </p>
+      <h6> Directory: </h6>
+      <p> {{ interface.directory }} </p>
+    </div>
+  </div>
+  <h5 style="text-align: center; margin: auto; width: 50%; border: 3px osolid black; padding: 10px"> Method Contracts </h5>
+  {% for method in methods %}
+  <div class="card-header text-center" style="margin: auto; width: 50%; padding: 10px;"> {{ method.name }} </div>
+  <div class="card" style="margin-top: auto; margin-left: auto; margin-right: auto; margin-bottom: 5%; width: 50%; padding: 10px">
+    <div class="card-body text-center">
+      <h5> Header: </h5>
+      <p> {{ method.header }} </p>
+      <h6> Returns: </h6>
+      <p> {{ method.returns }} </p>
+      <h6> Updates: </h6>
+      <p> {{ method.updates }} </p>
+      <h6> Prints: </h6>
+      <p> Prints: {{ method.prints }} </p>
+      <h6> Description: </h6>
+      <p> {{ method.description }} </p>
+      <p> Built by {{ method.builder_handle }} </p>
+      {% if method.isCodeWritten == True %}
+        <p> Written: <i class="fas fa-check-double"></i> </p>
+      {% endif %}
+      {% if method.isCodeWritten == False %}
+        <p> Written: <i class="fas fa-times"></i></p>
+      {% endif %}
+      {% if method.isCodeTested == True %}
+        <p> Tested: <i class="fas fa-check-double"></i> </p>
+      {% endif %}
+      {% if method.isCodeTested == False %}
+        <p> Tested: <i class="fas fa-times"></i></p>
+      {% endif %}
+      {% if method.isCodeUsable == True %}
+        <p> Usable: <i class="fas fa-check-double"></i></p>
+      {% endif %}
+      {% if method.isCodeUsable == False %}
+        <p> Usable: <i class="fas fa-times"></i></p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</body>
+
+</html>
