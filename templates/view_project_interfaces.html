@@ -19,9 +19,11 @@
     </thead>
     <tbody>
     {% for interface in interfaces %}
+    <tr>
       <td> <a class="btn btn-primary" href="{% url 'view_interface' interface.pk %}">{{ interface.name }} </a> </td>
       <td> {{ interface.implementing_class }} </td>
       <td> {{ interface.directory }} </td>
+    </tr>
     {% endfor %}
     </tbody>
   </table>
