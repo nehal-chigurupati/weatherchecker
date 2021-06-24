@@ -61,7 +61,7 @@ class NewsAPI:
 
 def GetNouns(inputString):
     words = nltk.word_tokenize(inputString)
-    stop_words = set(stopwords.words("English"))
+    stop_words = set(stopwords.words("english"))
 
     filtered_list = []
 
