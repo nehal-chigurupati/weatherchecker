@@ -27,10 +27,10 @@ SECRET_KEY = 'awioehgoiawhengiowhgoi2h38ghwoahg3h2p983gp2hg8392ph39guh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
-os.getenv("DEBUG", "False") == "True"
+DEBUG = os.getenv("DEBUG", "False") == "True"
 #DEVELOPMENT_MODE = True
-os.getenv("DEVELOPMENT_MODE", "False") == "True"
-#DEBUG = True
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+
 
 #ALLOWED_HOSTS = ["*"]
 os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
