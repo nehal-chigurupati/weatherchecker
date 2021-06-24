@@ -6,6 +6,9 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 import requests
 import time as time
 import nltk
+nltk.download("stopwords")
+nltk.download("averaged_perceptron_tagger")
+
 from nltk.corpus import stopwords
 
 """
