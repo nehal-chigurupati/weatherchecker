@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import conditions.views as condition_views
+import NewsFeed.views as NewsFeedViews
 from django.contrib.auth.models import User
 import documentation.views as documentation_views
 
@@ -29,4 +30,5 @@ urlpatterns = [
     path('nehal/documentation/interfaces/<int:pk>/', documentation_views.view_interface, name="view_interface"),
     path('nehal/documentation/projects/', documentation_views.all_projects, name='all_projects'),
     path('nehal/documentation/projects/<int:pk>/', documentation_views.view_project_interfaces, name='view_project_interfaces'),
+    path('nehal/newsfeed/headlines/', NewsFeedViews.GetHeadlines, name='get_headlines'),
 ]

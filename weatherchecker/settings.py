@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 from django.core.management.utils import get_random_secret_key
 import sys
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,14 +23,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+SECRET_KEY = 'awioehgoiawhengiowhgoi2h38ghwoahg3h2p983gp2hg8392ph39guh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+#DEBUG = True
+os.getenv("DEBUG", "False") == "True"
+#DEVELOPMENT_MODE = True
+os.getenv("DEVELOPMENT_MODE", "False") == "True"
+#DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
-#os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+#ALLOWED_HOSTS = ["*"]
+os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 
 # Application definition
@@ -46,6 +48,9 @@ INSTALLED_APPS = [
 
     'conditions',
     'documentation',
+    'NewsFeed',
+
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -89,12 +94,6 @@ if DEVELOPMENT_MODE is True:
             "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
     }
-elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-    if os.getenv("DATABASE_URL", None) is None:
-        raise Exception("DATABASE_URL environment variable not defined")
-    DATABASES = {
-        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
-    }
 
 
 # Password validation
@@ -134,11 +133,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
 """
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 """
-
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+
+"""
+REST FRAMEWORK SETTINGS
+"""
