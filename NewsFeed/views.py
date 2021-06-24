@@ -6,9 +6,9 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 import requests
 import time as time
 import nltk
+nltk.download("punkt")
 nltk.download("stopwords")
 nltk.download("averaged_perceptron_tagger")
-
 from nltk.corpus import stopwords
 
 """
@@ -92,7 +92,7 @@ def GetProperNouns(inputString):
 
 def GetVerbs(inputString):
         words = nltk.word_tokenize(inputString)
-        stop_words = set(stopwords.words("English"))
+        stop_words = set(stopwords.words("english"))
 
         filtered_list = []
 
