@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 import requests
 import time as time
 import nltk
+
 nltk.download("punkt")
 nltk.download("stopwords")
 nltk.download("averaged_perceptron_tagger")
@@ -58,6 +59,15 @@ class NewsAPI:
         for item in articles:
             headlines.append(item['title'])
         return headlines
+
+    def GetHeadlineLinks():
+        all_top_headlines = NewsAPI.TopHeadlines.fetch(language='en')
+        articles = all_top_headlines['articles']
+        headlines = []
+        for item in articles:
+            headlines.append(item['url'])
+        return headlines
+
 
 def GetNouns(inputString):
     words = nltk.word_tokenize(inputString)
@@ -122,13 +132,16 @@ def GetKeywords():
 
 @api_view(['GET'])
 def GetHeadlines(request):
+    data = request.data
     if request.method == 'GET':
         all_headlines = NewsAPI.GetHeadlines()
+        all_links = NewsAPI.GetHeadlineLinks()
         headline_dict = {}
         all_keywords = GetKeywords()
         counter = 0
         for item in all_headlines:
             keywords = all_keywords[counter]
-            headline_dict[item] = keywords
+            headline_dict[item] = {'keywords': keywords, 'URL': all_links[counter]}
             counter += 1
+
         return Response(headline_dict)
