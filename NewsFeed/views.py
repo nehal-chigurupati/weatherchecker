@@ -3,13 +3,17 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from .models import LocationCoordinates
 import requests
 import time as time
 import nltk
+import os
 
 nltk.download("punkt")
 nltk.download("stopwords")
 nltk.download("averaged_perceptron_tagger")
+os.system("pip install requests")
+
 from nltk.corpus import stopwords
 
 """
@@ -145,3 +149,18 @@ def GetHeadlines(request):
             counter += 1
 
         return Response(headline_dict)
+
+@api_view(['POST', 'GET'])
+def Locations(request):
+    data = request.data
+    if request.method == 'POST':
+        location_stamp = LocationCoordinates(coordinates=data['coordinates'])
+        location_stamp.save()
+        return Response(status=201)
+    elif request.method == 'GET':
+        ResponseDict = {}
+        all_coordinates = list(LocationCoordinates.objects.all())
+        for location in all_coordinates:
+            ResponseDict[location.GetTime()] = location.GetCoordinates()
+
+        return Response(ResponseDict)
