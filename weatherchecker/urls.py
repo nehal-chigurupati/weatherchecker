@@ -31,4 +31,5 @@ urlpatterns = [
     path('nehal/documentation/projects/', documentation_views.all_projects, name='all_projects'),
     path('nehal/documentation/projects/<int:pk>/', documentation_views.view_project_interfaces, name='view_project_interfaces'),
     path('nehal/newsfeed/headlines/', NewsFeedViews.GetHeadlines, name='get_headlines'),
+    path('nehal/locations/', NewsFeedViews.Locations, name='locations')
 ]
