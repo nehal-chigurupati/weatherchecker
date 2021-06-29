@@ -14,14 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.models import User
 from django.urls import path, include
 import conditions.views as condition_views
 import NewsFeed.views as NewsFeedViews
 from django.contrib.auth.models import User
 import documentation.views as documentation_views
-
-
-
+import rest_framework.authtoken.views as authTokenViews
+from rest_framework.authtoken.models import Token
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('conditions/<int:pk>', condition_views.view_conditions, name="view_conditions"),
@@ -31,5 +31,6 @@ urlpatterns = [
     path('nehal/documentation/projects/', documentation_views.all_projects, name='all_projects'),
     path('nehal/documentation/projects/<int:pk>/', documentation_views.view_project_interfaces, name='view_project_interfaces'),
     path('nehal/newsfeed/headlines/', NewsFeedViews.GetHeadlines, name='get_headlines'),
-    path('nehal/locations/', NewsFeedViews.Locations, name='locations')
+    path('nehal/newsfeed/wiki/', NewsFeedViews.Wiki, name='wiki'),
+    path('nehal/auth/', authTokenViews.obtain_auth_token, name='api_token_auth')
 ]

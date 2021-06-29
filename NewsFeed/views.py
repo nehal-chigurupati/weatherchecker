@@ -3,16 +3,20 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from .models import LocationCoordinates
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+from .models import LocationCoordinates, WikiPage
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 import requests
 import time as time
 import nltk
 import os
+import wikipediaapi
 
 nltk.download("punkt")
 nltk.download("stopwords")
 nltk.download("averaged_perceptron_tagger")
-os.system("pip install requests")
 
 from nltk.corpus import stopwords
 
@@ -135,6 +139,7 @@ def GetKeywords():
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def GetHeadlines(request):
     data = request.data
     if request.method == 'GET':
@@ -151,6 +156,7 @@ def GetHeadlines(request):
         return Response(headline_dict)
 
 @api_view(['POST', 'GET'])
+@permission_classes([IsAuthenticated])
 def Locations(request):
     data = request.data
     if request.method == 'POST':
@@ -164,3 +170,41 @@ def Locations(request):
             ResponseDict[location.GetTime()] = location.GetCoordinates()
 
         return Response(ResponseDict)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def Wiki(request):
+    """
+    TO FETCH FROM WIKI, PUT THINGS IN PARAMS ARG IN REQUESTS LIB PYTHON
+    """
+    data = request.query_params
+    if request.method == 'GET':
+        search_term = data['search_term']
+        print(search_term)
+        all_pages = list(WikiPage.objects.all())
+        return_text = ""
+
+        search_results = WikiPage.objects.filter(search_term=search_term)
+        if len(search_results) == 0:
+            wiki = wikipediaapi.Wikipedia('en')
+            page = wiki.page(search_term)
+            new_saved_page = WikiPage(search_term=search_term, text=page.text)
+            new_saved_page.save()
+            return Response({'text': page.text})
+        elif len(search_results) == 1:
+            page = list(search_results)[0]
+            return Response({'text': page.text})
+
+class CustomAuthToken(ObtainAuthToken):
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            token, created =  Token.objects.get_or_create(user=serializer.validated_data['user'])
+
+            if not created:
+                # update the created time of the token to keep it valid
+                token.created = datetime.datetime.utcnow()
+                token.save()
+
+            return Response({'token': token.key})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
