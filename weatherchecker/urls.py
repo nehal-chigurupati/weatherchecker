@@ -18,6 +18,7 @@ from django.contrib.auth.models import User
 from django.urls import path, include
 import conditions.views as condition_views
 import NewsFeed.views as NewsFeedViews
+import ml.views as MLViews
 from django.contrib.auth.models import User
 import documentation.views as documentation_views
 import rest_framework.authtoken.views as authTokenViews
@@ -37,6 +38,7 @@ urlpatterns = [
     path('nehal/newsfeed/headlines/', NewsFeedViews.GetHeadlines, name='get_headlines'),
     path('nehal/newsfeed/wiki/', NewsFeedViews.Wiki, name='wiki'),
     path('nehal/auth/', authTokenViews.obtain_auth_token, name='api_token_auth'),
+    path('nehal/ml/flightdelay', MLViews.FlightDelayPrediction, name='flight_delay_prediction'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
