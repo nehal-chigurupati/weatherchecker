@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class LocationCoordinates(models.Model):
     time = models.DateTimeField(auto_now_add=True)
@@ -26,3 +27,9 @@ class WikiPage(models.Model):
 
     def get_full_text(self):
         return str(self.text)
+
+
+    class Meta:
+        managed=False
+        db_table='newsfeed_wikipage'
+        #db_table = 'NewsFeed_wikipage'
