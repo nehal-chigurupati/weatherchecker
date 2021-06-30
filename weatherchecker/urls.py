@@ -22,6 +22,10 @@ from django.contrib.auth.models import User
 import documentation.views as documentation_views
 import rest_framework.authtoken.views as authTokenViews
 from rest_framework.authtoken.models import Token
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('conditions/<int:pk>', condition_views.view_conditions, name="view_conditions"),
@@ -32,5 +36,8 @@ urlpatterns = [
     path('nehal/documentation/projects/<int:pk>/', documentation_views.view_project_interfaces, name='view_project_interfaces'),
     path('nehal/newsfeed/headlines/', NewsFeedViews.GetHeadlines, name='get_headlines'),
     path('nehal/newsfeed/wiki/', NewsFeedViews.Wiki, name='wiki'),
-    path('nehal/auth/', authTokenViews.obtain_auth_token, name='api_token_auth')
+    path('nehal/auth/', authTokenViews.obtain_auth_token, name='api_token_auth'),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
 ]

@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.http import Http404
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
 
 from .fetch import get_weather_data, convert_data, kelvin_to_fahrenheit, meters_to_statute_meters
 from .fetch import getActiveFlightsToAirport, getActiveFlightsFromAirport
@@ -23,7 +24,7 @@ def are_conditions_met(data):
     else:
         print("test 5 failed")
     return counter == 5
-
+@login_required
 def home(request):
     available_cities = City.objects.all()
     is_safe_for_flying = {}
@@ -33,7 +34,7 @@ def home(request):
     return render(request, 'home.html', {'available_cities': available_cities})
 
 
-
+@login_required
 def view_conditions(request, pk):
     city_object = get_object_or_404(City, pk=pk)
     requested_city = city_object.get_fetchable_name()
@@ -43,9 +44,9 @@ def view_conditions(request, pk):
     flights_from_airport = getActiveFlightsFromAirport(IATA_CODES[requested_city])
     weather_data['are_conditions_met'] = are_conditions_met(weather_data)
     weather_data['city'] = requested_city
-    
+
 
     return render(request, 'conditions.html', {'weather': weather_data, 'flights_to_airport': flights_to_airport, 'flights_from_airport': flights_from_airport})
-
+@login_required
 def view_cities(request):
     return render(request, 'view_cities.html')
