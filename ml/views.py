@@ -26,7 +26,6 @@ def GetInputArray(origin, destination, carrier):
     return data
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def FlightDelayPrediction(request):
     RequestInfo = request.query_params
     if 'origin' in RequestInfo and 'destination' in RequestInfo and 'carrier' in RequestInfo:
@@ -39,7 +38,6 @@ def FlightDelayPrediction(request):
         return render(request, 'flightdelayprediction.html')
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def ModelEngine(request):
     RequestInfo = request.query_params
     if 'sequence' in RequestInfo:
