@@ -10,3 +10,8 @@ djangorestframework==3.12.4
 nltk==3.5
 Wikipedia-API==0.5.4
 requests==2.9.1
+scikit-learn==0.24.2
+pandas==1.0.5
+numpy==1.18.5
+pickle==4.0
+
