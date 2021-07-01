@@ -1,0 +1,28 @@
+{% load static %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://kit.fontawesome.com/7ccb74e647.js" crossorigin="anonymous"></script>
+    <title>Model Engine</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  </head>
+  <body>
+      <div class="card text-center" style="width: 90%; margin-top: 2%; margin-left: 5%;">
+        <div class="card-body">
+        <h5> MODEL ENGINE ENDPOINT  </h5>
+        <p style="padding-bottom: 0%; margin-bottom: 0%;"> import requests </p>
+          <p style="padding-bottom: 0%;margin-bottom: 0%;"> sequence = </p>
+
+          <p style="padding-bottom: 0%;margin-bottom: 0%;">"""</p>
+          <p style="padding-bottom: 0%;margin-bottom: 0%;">BUILD MODEL TREE WITH NAME FIRSTMODEL,</p>
+          <p style="padding-bottom: 0%;margin-bottom: 0%;">TRAIN MODEL FIRSTMODEL WITH DATASET weatherchecker/ml/FlightDelayFiles/trainingSet1Features.pkl&weatherchecker/ml/FlightDelayFiles/trainingSet1Labels.pkl,</p>
+          <p style="padding-bottom: 0%;margin-bottom: 0%;">TEST MODEL FIRSTMODEL WITH DATASET weatherchecker/ml/FlightDelayFiles/testingSet1Features.pkl&weatherchecker/ml/FlightDelayFiles/testingSet1Labels.pkl"</p>
+          <p style="padding-bottom: 0%;margin-bottom: 0%;">"""</p>
+          <p style="padding-bottom: 0%;margin-bottom: 0%;">params={'sequence': sequence, 'Authentication':'Token ********'}</p>
+
+          <p style="padding-bottom: 0%;margin-bottom: 0%;">data = requests.get('https://weatherchecker.xyz/nehal/ml/engine', params=params)</p>
+          <p style="padding-bottom: 0%;margin-bottom: 0%;">print(data.json())</p>
+        </div>
+      </div>
+  </body>
+</html>

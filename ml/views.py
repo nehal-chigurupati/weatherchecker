@@ -7,13 +7,11 @@ from rest_framework.authentication import BasicAuthentication, SessionAuthentica
 from rest_framework.permissions import IsAuthenticated
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from ml.TrainingEngine.Executor import *
 
 from sklearn import tree
-import pandas as pd
 import numpy as np
 import pickle
-import sys
-import os
 
 
 def GetInputArray(origin, destination, carrier):
@@ -28,6 +26,7 @@ def GetInputArray(origin, destination, carrier):
     return data
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def FlightDelayPrediction(request):
     RequestInfo = request.query_params
     if 'origin' in RequestInfo and 'destination' in RequestInfo and 'carrier' in RequestInfo:
@@ -38,3 +37,14 @@ def FlightDelayPrediction(request):
         return Response({'might_be_delayed': (prediction == 1)[0]}, template_name='flightdelayprediction.html')
     else:
         return render(request, 'flightdelayprediction.html')
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def ModelEngine(request):
+    RequestInfo = request.query_params
+    if 'sequence' in RequestInfo:
+        sequence = RequestInfo['sequence']
+        current_executor = Executor(sequence)
+        return Response(current_executor.parse())
+    else:
+        return render(request, 'modelengine.html')
