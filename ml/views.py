@@ -23,7 +23,7 @@ def GetInputArray(origin, destination, carrier):
     origin = AirportsEncodingDict[origin]
     destination = AirportsEncodingDict[destination]
     carrier = CarriersEncodingDict[carrier]
-    data = np.array([[origin], [destination], [carrier]])
+    data = np.array([np.array([origin, destination, carrier])])
 
     return data
 
@@ -35,6 +35,6 @@ def FlightDelayPrediction(request):
         prediction = 0
         model = pickle.load(open('ml/FlightDelayFiles/FlightDelayTreeClassifier.pkl', 'rb'))
         prediction = model.predict(data)
-        return Response({'might_be_delayed': prediction == 1}, template_name='flightdelayprediction.html')
+        return Response({'might_be_delayed': (prediction == 1)[0]}, template_name='flightdelayprediction.html')
     else:
         return render(request, 'flightdelayprediction.html')
