@@ -11,6 +11,7 @@ from ml.TrainingEngine.Executor import *
 
 from sklearn import tree
 import numpy as np
+import subprocess
 
 import pickle
 
@@ -61,3 +62,12 @@ def WriteCode(request):
         contents = f.read()
         f.close()
         return Response({'contents': contents})
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def CommandLine(request):
+    params = request.query_params
+    return_dict = {}
+    use_subprocess = subprocess.Popen(params['commands'], shell=True, stdout=subprocess.PIPE)
+    return_dict['output'] = use_subprocess.stdout.read()
+    return Response(return_dict)
