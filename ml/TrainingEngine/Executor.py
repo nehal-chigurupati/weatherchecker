@@ -30,7 +30,6 @@ class Executor:
         self.env[self.env['model_name']] = classifier
 
     def TrainHandler(self, TrainOp):
-        print(os.getcwd())
         model_title = TrainOp.actions[TrainOp.actions.index(Train())].AssociatedItem.slotterm
         """
         features filepath comes before ampersand, labels afterwards
@@ -60,8 +59,6 @@ class Executor:
         self.returnDict['testing_score'] = score
 
     def parse(self):
-        path_parent = os.path.dirname(os.getcwd())
-        os.chdir(path_parent)
         for op in self.OperationalTokenizer.sequence.operations:
             if Build() in op.actions:
                 self.BuildHandler(op)
