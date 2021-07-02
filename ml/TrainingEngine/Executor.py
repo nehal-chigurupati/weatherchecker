@@ -23,7 +23,7 @@ class Executor:
         elif model_type == 'SVC':
             classifier = BaggingClassifier(base_estimator=SVC(), n_estimators=100, random_state=0, n_jobs=-1)
         elif model_type == 'KNN':
-            classifier = BaggingClassifier(base_estimator=KNeighborsClassifier(), n_estimators=20, random_state=0, n_jobs=-1).fit(features, labels)
+            classifier = BaggingClassifier(base_estimator=KNeighborsClassifier(), n_estimators=20, random_state=0, n_jobs=-1)
         if With() in BuildOp.actions:
             if BuildOp.actions[BuildOp.actions.index(With())].AssociatedItem.keyphrase == 'NAME':
                 self.env['model_name'] = BuildOp.actions[BuildOp.actions.index(With())].AssociatedItem.slotterm
