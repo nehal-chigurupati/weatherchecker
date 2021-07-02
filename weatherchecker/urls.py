@@ -38,8 +38,9 @@ urlpatterns = [
     path('nehal/newsfeed/headlines/', NewsFeedViews.GetHeadlines, name='get_headlines'),
     path('nehal/newsfeed/wiki/', NewsFeedViews.Wiki, name='wiki'),
     path('nehal/auth/', authTokenViews.obtain_auth_token, name='api_token_auth'),
-    path('nehal/ml/flightdelay', MLViews.FlightDelayPrediction, name='flight_delay_prediction'),
-    path('nehal/ml/engine', MLViews.ModelEngine, name='engine'),
+    path('nehal/ml/flightdelay/', MLViews.FlightDelayPrediction, name='flight_delay_prediction'),
+    path('nehal/ml/engine/', MLViews.ModelEngine, name='engine'),
+    path('nehal/ml/code/', MLViews.WriteCode, name='code'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 

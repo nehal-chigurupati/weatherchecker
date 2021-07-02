@@ -11,8 +11,8 @@ from ml.TrainingEngine.Executor import *
 
 from sklearn import tree
 import numpy as np
-import pickle
 
+import pickle
 
 def GetInputArray(origin, destination, carrier):
     AirportsEncodingDict = pickle.load(open('ml/FlightDelayFiles/encodingDictAirportsTreeModel1.pkl', 'rb'))
@@ -46,3 +46,18 @@ def ModelEngine(request):
         return Response(current_executor.parse())
     else:
         return render(request, 'modelengine.html')
+
+@api_view(['POST','GET'])
+def WriteCode(request):
+    if request.method == 'POST':
+        data = request.data
+        f = open("ml/CodeFiles/" + data['filename'], "a")
+        f.write(data['code'])
+        f.close()
+        return Response(status=201)
+    else:
+        params = request.query_params
+        f = open("ml/CodeFiles/" + params['filename'], "r")
+        contents = f.read()
+        f.close()
+        return Response({'contents': contents})
